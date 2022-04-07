@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build --prefix client",
     "client": "npm start --prefix client",
     "server": "npm start --prefix server",
-    "start": "concurrently \"npm run client\" \"npm run server\"",
-    "prod": "npm install --prefix client && npm install --prefix server && npm run server"
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "node server/src/server.js",
+    "heroku-postbuild": "npm install --prefix client && npm install --prefix server"
   },
   "keywords": [],
   "author": "",
