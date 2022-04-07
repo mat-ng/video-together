@@ -1,0 +1,21 @@
+{
+  "name": "video-together",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "npm start --prefix server",
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "prod": "npm run build --prefix client && npm run server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
