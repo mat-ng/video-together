@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import io from 'socket.io-client'
 
+import Video from './components/Video.jsx'
+
 const socket = io()
 
 const App = () => {
@@ -18,8 +20,9 @@ const App = () => {
                     setClicks(clicks + 1)
                     socket.emit('clicks', clicks + 1)
                 }}>
-                Click here
+                Click Here
             </button>
+            <Video/>
         </div>
     )
 }

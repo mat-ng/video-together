@@ -1,7 +1,7 @@
 const path = require('path')
 
 const express = require('express')
-const dotenv = require('dotenv').config({path: path.resolve(__dirname, '../../.env') })
+const dotenv = require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
 const socketIO = require('socket.io')
 
 const NODE_ENV = process.env.NODE_ENV || 'production'
@@ -23,7 +23,15 @@ const io = socketIO(app)
 
 		console.log('Client connected')
 
+
+		socket.on('video', data => {
+			io.emit('new-video', data)
+			console.log(data)
+		})
+
 		socket.on('disconnect', () => {
 			console.log('Client disconnected')
+			socket.removeAllListeners('video')
+			socket.removeAllListeners('new-video')
 		})
 	})
