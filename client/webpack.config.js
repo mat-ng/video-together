@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config({path: path.resolve(__dirname, '../.env'
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 
+
 module.exports = {
 
     entry: './src/index.js',
@@ -42,5 +43,4 @@ module.exports = {
             }
         ]
     }
-
 }

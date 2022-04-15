@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import io from 'socket.io-client'
 
-import getYoutubeID from 'get-youtube-id'
+import getYouTubeId from 'get-youtube-id'
 import YouTube from 'react-youtube'
 
 import Button from '@mui/material/Button'
@@ -18,67 +18,49 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 const socket = io()
 
 const Video = () => {
-  const [mute, setMute] = useState(true)
+  const [join, setJoin] = useState(false)
+  const [mute, setMute] = useState(false)
   const [searchbar, setSearchbar] = useState('')
   const [speed, setSpeed] = useState(1)
-  const [videoID, setVideoID] = useState('dQw4w9WgXcQ')
+  const [videoId, setVideoId] = useState('dQw4w9WgXcQ')
+  const [videoIdError, setVideoIdError] = useState(false)
   const [videoPlayer, setVideoPlayer] = useState({})
 
-  useEffect(() => {
-    socket.on('new-video', arg => {
-      console.log(videoPlayer) //figure out why videoPlayer isn't getting updated state 
-      let data = JSON.parse(arg) //might have to change this to state
-      console.log(data)
-
-      if (data.mute !== undefined) {
-        if(data.mute) videoPlayer.mute()
-        else videoPlayer.unMute()
-        setMute(data.mute)
-      }
-
-      if (data.time !== undefined) {
-        videoPlayer.seekTo(data.time)
-      }
   
-      if (data.searchbar !== undefined) {
-        setSearchbar(data.searchbar)
-      }
-
-      if (data.speed !== undefined) {
-        setSpeed(data.speed)
-        videoPlayer.setPlaybackRate(e.target.value)
-      }
-  
-      if (data.videoID !== undefined) {
-        setVideoID(data.videoID)
-      }
-    })
-
-  }, [])
+  const renderJoinButton = () => {
+    const handleJoin = () => {
+      setJoin(true)
+    }
+    
+    return (
+      <Button onClick={handleJoin} variant='contained' style={{fontSize: 20}}>Click here to join the video!</Button>
+    )
+  }
 
 
   const renderSearchbar = () => {
     const handleInput = e => {
-      setSearchbar(e.target.value) //SCRAP IN PRODUCTION
+      // setSearchbar(e.target.value) //SCRAP IN PRODUCTION
       
       socket.emit('video', JSON.stringify({ searchbar: e.target.value }))
     }
 
     const handleSubmit = e => {
-      if(getYoutubeID(searchbar)) {
-        setVideoID(getYoutubeID(searchbar)) //SCRAP IN PRODUCTION
-        
-        socket.emit('video', JSON.stringify({ videoID: getYoutubeID(searchbar) }))
+      if(getYouTubeId(searchbar)) {
+        // setVideoId(getYouTubeId(searchbar)) //SCRAP IN PRODUCTION
+      
+        socket.emit('video', JSON.stringify({ videoId: getYouTubeId(searchbar), videoIdError: false }))
+      }
+      else {
+        socket.emit('video', JSON.stringify({ videoIdError: true }))
       }
     }
 
     return (
-      <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-        <div style={{width: 640}}>
-          <h1 style={{fontFamily: 'Trebuchet MS', fontSize: 23}}>Paste your Youtube URL below and enjoy your watch party!</h1>
-          <TextField onChange={handleInput} placeholder='Paste YouTube Link' variant='outlined' value={searchbar} style={{width: 550}}/>
-          <Button onClick={handleSubmit} variant='outlined' style={{float: 'right', height: 56}}>Enter</Button>
-        </div>
+      <div>
+        <h1 style={{fontFamily: 'Trebuchet MS', fontSize: 22}}>Paste your YouTube URL below and enjoy your watch party!</h1>
+        <TextField onChange={handleInput} placeholder='Paste YouTube Link' variant='outlined' value={searchbar} error={videoIdError} helperText={videoIdError ? 'Please enter a valid YouTube URL' : ''} style={{width: 550}}/>
+        <Button onClick={handleSubmit} variant='outlined' style={{float: 'right', height: 56}}>Enter</Button>
       </div>
     )
   }
@@ -93,21 +75,49 @@ const Video = () => {
         controls: 0,
         disablekb: 1,
         loop: 1,
-        mute: 1,
-        playlist: videoID
+        playlist: videoId
       }
     }
 
     const storeEvent = e => {
-      console.log('event stored')
-      console.log(e.target)
       setVideoPlayer(e.target)
+
+      socket.on('new-video', arg => {
+        let data = JSON.parse(arg)
+
+        if (data.mute !== undefined) {
+          data.mute ? e.target.mute() : e.target.unMute()
+          setMute(data.mute)
+        }
+
+        if (data.time !== undefined) {
+          e.target.seekTo(data.time)
+        }
+    
+        if (data.searchbar !== undefined) {
+          setSearchbar(data.searchbar)
+        }
+
+        if (data.speed !== undefined) {
+          e.target.setPlaybackRate(data.speed)
+          setSpeed(data.speed)
+        }
+    
+        if (data.videoId !== undefined) {
+          setVideoId(data.videoId)
+          socket.off()
+        }
+
+        if (data.videoIdError !== undefined) {
+          setVideoIdError(data.videoIdError)
+        }
+      })
     }
 
     return (
       <div style={{ pointerEvents: 'none', width: '100%', display: 'flex', justifyContent: 'center', marginTop: 20}} >
         <YouTube 
-          videoId={videoID}
+          videoId={videoId}
           opts={videoOptions}
           onReady={storeEvent}
         />
@@ -124,54 +134,59 @@ const Video = () => {
     }
 
     const handleFastForward = () => {
-      videoPlayer.seekTo(videoPlayer.getCurrentTime() + 5) //SCRAP IN PRODUCTION
+      // videoPlayer.seekTo(videoPlayer.getCurrentTime() + 5) //SCRAP IN PRODUCTION
       
       socket.emit('video', JSON.stringify({ time: videoPlayer.getCurrentTime() + 5 }))
     }
   
     const handleMute = () => {
-      mute ? videoPlayer.unMute() : videoPlayer.mute() //SCRAP IN PRODUCTION
-      setMute(!mute) //SCRAP IN PRODUCTION
+      // mute ? videoPlayer.unMute() : videoPlayer.mute() //SCRAP IN PRODUCTION
+      // setMute(!mute) //SCRAP IN PRODUCTION
 
       socket.emit('video', JSON.stringify({ mute: !mute }))
     }
 
     const handleFastRewind = () => {
-      videoPlayer.seekTo(videoPlayer.getCurrentTime() - 5) //SCRAP IN PRODUCTION
+      // videoPlayer.seekTo(videoPlayer.getCurrentTime() - 5) //SCRAP IN PRODUCTION
       
       socket.emit('video', JSON.stringify({ time: videoPlayer.getCurrentTime() - 5 }))
     }
   
     const handleSpeedChange = e => {
-      videoPlayer.setPlaybackRate(e.target.value) //SCRAP IN PRODUCTION
-      setSpeed(e.target.value) //SCRAP IN PRODUCTION
+      // videoPlayer.setPlaybackRate(e.target.value) //SCRAP IN PRODUCTION
+      // setSpeed(e.target.value) //SCRAP IN PRODUCTION
 
       socket.emit('video', JSON.stringify({ speed: e.target.value }))
     }
 
     return (
-      <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-        <div style={{width: 640}}>
-          <Button onClick={handleFastRewind} style={{height: 50}}><FastRewindIcon/></Button>
-          <Button onClick={handleFastForward} style={{height: 50}}><FastForwardIcon/></Button>
-          <Button onClick={handleMute} style={{height: 50}}>{mute ? <VolumeOffIcon/> : <VolumeUpIcon/>}</Button>
-          <Select value={speed} onChange={handleSpeedChange} style={{float: 'right', height: 50}}>
-            { speedOptions.map (speedOption => createMenuItem(speedOption)) }
-          </Select>
-        </div>
+      <div>
+        <Button onClick={handleFastRewind} style={{height: 50}}><FastRewindIcon/></Button>
+        <Button onClick={handleFastForward} style={{height: 50}}><FastForwardIcon/></Button>
+        <Button onClick={handleMute} style={{height: 50}}>{mute ? <VolumeOffIcon/> : <VolumeUpIcon/>}</Button>
+        <Select value={speed} onChange={handleSpeedChange} style={{float: 'right', height: 50}}>
+          { speedOptions.map (speedOption => createMenuItem(speedOption)) }
+        </Select>
       </div>
     )
   }
 
 
   return(
-    <div>
-      {renderSearchbar()}
-      {renderVideoPlayer()}
-      {renderVideoControls()}
+    <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+      { join ?
+          <div style={{width: 640}}>
+            {renderSearchbar()}
+            {renderVideoPlayer()}
+            {renderVideoControls()}
+          </div>
+        :
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: 70}}>
+           {renderJoinButton()}
+        </div>
+      }
     </div>
   )
-  
 }
 
 export default Video
