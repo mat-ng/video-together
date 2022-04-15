@@ -45,7 +45,7 @@ const Video = () => {
       socket.emit('video', JSON.stringify({ searchbar: e.target.value }))
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = () => {
       if(getYouTubeId(searchbar)) {
         // setVideoId(getYouTubeId(searchbar)) //SCRAP IN PRODUCTION
       
@@ -115,7 +115,7 @@ const Video = () => {
     }
 
     return (
-      <div style={{ pointerEvents: 'none', width: '100%', display: 'flex', justifyContent: 'center', marginTop: 20}} >
+      <div style={{ pointerEvents: 'none', width: '100%', display: 'flex', justifyContent: 'center', marginTop: 20 }} >
         <YouTube 
           videoId={videoId}
           opts={videoOptions}
@@ -173,7 +173,7 @@ const Video = () => {
 
 
   return(
-    <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       { join ?
           <div style={{width: 640}}>
             {renderSearchbar()}
@@ -181,7 +181,7 @@ const Video = () => {
             {renderVideoControls()}
           </div>
         :
-        <div style={{display: 'flex', justifyContent: 'center', marginTop: 70}}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 70 }}>
            {renderJoinButton()}
         </div>
       }
