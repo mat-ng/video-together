@@ -12,14 +12,14 @@ const app = express()
 	.use(express.static(path.resolve(__dirname, '../../client/dist')))
 	.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
-let mostRecentClick = 0
+// let mostRecentClick = 0
 const io = socketIO(app)
 	.on('connection', socket => {
-		io.emit('new-clicks', mostRecentClick)
-		socket.on('clicks', data => {
-			io.emit('new-clicks', data)
-			mostRecentClick = data
-		})
+		// io.emit('new-clicks', mostRecentClick)
+		// socket.on('clicks', data => {
+		// 	io.emit('new-clicks', data)
+		// 	mostRecentClick = data
+		// })
 
 		console.log('Client connected')
 
@@ -31,7 +31,7 @@ const io = socketIO(app)
 
 		socket.on('disconnect', () => {
 			console.log('Client disconnected')
-			socket.removeAllListeners('video')
-			socket.removeAllListeners('new-video')
+			// socket.removeAllListeners('video')
+			// socket.removeAllListeners('new-video')
 		})
 	})

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import io from 'socket.io-client'
 
+import Title from './components/images/Title.png'
 import Video from './components/Video.jsx'
 
 const socket = io()
@@ -14,14 +15,17 @@ const App = () => {
 
     return (
         <div>
-            <p>{clicks}</p>
+            {/* <p>{clicks}</p>
             <button 
                 onClick={() => {
                     setClicks(clicks + 1)
                     socket.emit('clicks', clicks + 1)
                 }}>
                 Click Here
-            </button>
+            </button> */}
+            <div style={{display: 'flex', justifyContent: 'center', paddingBottom: 30}}>
+                <img src={Title} style={{height: 60}}/>
+            </div>
             <Video/>
         </div>
     )
