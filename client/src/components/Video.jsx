@@ -18,7 +18,7 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 const socket = io()
 
 const Video = () => {
-  const [join, setJoin] = useState(false)
+  const [joined, setJoined] = useState(false)
   const [mute, setMute] = useState(false)
   const [searchbar, setSearchbar] = useState('')
   const [speed, setSpeed] = useState(1)
@@ -29,7 +29,7 @@ const Video = () => {
   
   const renderJoinButton = () => {
     const handleJoin = () => {
-      setJoin(true)
+      setJoined(true)
     }
     
     return (
@@ -174,7 +174,7 @@ const Video = () => {
 
   return(
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      { join ?
+      { joined ?
           <div style={{width: 640}}>
             {renderSearchbar()}
             {renderVideoPlayer()}
