@@ -25,8 +25,7 @@ const Video = () => {
 
     setSearchbar(data.searchbar)
     setStart(data.start + 1)
-    setVideoId(data.videoId),
-    setVideoIdError(data.videoIdError)
+    setVideoId(data.videoId)
   })
   
 
@@ -82,9 +81,8 @@ const Video = () => {
     const storeEvent = e => {
       setVideoPlayer(e.target)
       e.target.seekTo(start)
-
       socket.off()
-      
+
       socket.on('new-video-control', arg => {
         let data = JSON.parse(arg)
 
@@ -92,8 +90,7 @@ const Video = () => {
           socket.emit('user-info', JSON.stringify({
             searchbar: searchbar,
             start: e.target.getCurrentTime() || 0,
-            videoId: videoId,
-            videoIdError: videoIdError
+            videoId: videoId
           }))
         }
 
