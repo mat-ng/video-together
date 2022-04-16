@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Banner from './components/images/Banner.png'
+import Banner from './assets/Banner.png'
 import Video from './components/Video.jsx'
 
 
