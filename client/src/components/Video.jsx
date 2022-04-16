@@ -42,17 +42,17 @@ const Video = () => {
     const handleInput = e => {
       // setSearchbar(e.target.value) //SCRAP IN PRODUCTION
       
-      socket.emit('video', JSON.stringify({ searchbar: e.target.value }))
+      socket.emit('video-control', JSON.stringify({ searchbar: e.target.value }))
     }
 
     const handleSubmit = () => {
       if(getYouTubeId(searchbar)) {
         // setVideoId(getYouTubeId(searchbar)) //SCRAP IN PRODUCTION
       
-        socket.emit('video', JSON.stringify({ videoId: getYouTubeId(searchbar), videoIdError: false }))
+        socket.emit('video-control', JSON.stringify({ videoId: getYouTubeId(searchbar), videoIdError: false }))
       }
       else {
-        socket.emit('video', JSON.stringify({ videoIdError: true }))
+        socket.emit('video-control', JSON.stringify({ videoIdError: true }))
       }
     }
 
@@ -82,7 +82,7 @@ const Video = () => {
     const storeEvent = e => {
       setVideoPlayer(e.target)
 
-      socket.on('new-video', arg => {
+      socket.on('new-video-control', arg => {
         let data = JSON.parse(arg)
 
         if (data.mute !== undefined) {
@@ -136,27 +136,27 @@ const Video = () => {
     const handleFastForward = () => {
       // videoPlayer.seekTo(videoPlayer.getCurrentTime() + 5) //SCRAP IN PRODUCTION
       
-      socket.emit('video', JSON.stringify({ time: videoPlayer.getCurrentTime() + 5 }))
+      socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() + 5 }))
     }
   
     const handleMute = () => {
       // mute ? videoPlayer.unMute() : videoPlayer.mute() //SCRAP IN PRODUCTION
       // setMute(!mute) //SCRAP IN PRODUCTION
 
-      socket.emit('video', JSON.stringify({ mute: !mute }))
+      socket.emit('video-control', JSON.stringify({ mute: !mute }))
     }
 
     const handleFastRewind = () => {
       // videoPlayer.seekTo(videoPlayer.getCurrentTime() - 5) //SCRAP IN PRODUCTION
       
-      socket.emit('video', JSON.stringify({ time: videoPlayer.getCurrentTime() - 5 }))
+      socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() - 5 }))
     }
   
     const handleSpeedChange = e => {
       // videoPlayer.setPlaybackRate(e.target.value) //SCRAP IN PRODUCTION
       // setSpeed(e.target.value) //SCRAP IN PRODUCTION
 
-      socket.emit('video', JSON.stringify({ speed: e.target.value }))
+      socket.emit('video-control', JSON.stringify({ speed: e.target.value }))
     }
 
     return (

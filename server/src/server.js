@@ -19,8 +19,8 @@ const io = socketIO(app)
 
 		console.log('Client connected')
 
-		socket.on('video', data => {
-			io.emit('new-video', data)
+		socket.on('video-control', data => {
+			io.emit('new-video-control', data)
 			console.log(data)
 
 		})
