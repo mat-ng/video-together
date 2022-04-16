@@ -7,6 +7,8 @@ import Button from '@mui/material/Button'
 import FastForwardIcon from '@mui/icons-material/FastForward'
 import FastRewindIcon from '@mui/icons-material/FastRewind'
 import TextField from '@mui/material/TextField'
+import VolumeOffIcon from '@mui/icons-material/VolumeOff'
+import VolumeUpIcon from '@mui/icons-material/VolumeUp'
 import YouTube from 'react-youtube'
 
 
@@ -14,6 +16,7 @@ const socket = io()
 
 const Video = () => {
   const [joined, setJoined] = useState(false)
+  const [mute, setMute] = useState(false)
   const [searchbar, setSearchbar] = useState('')
   const [start, setStart] = useState(0)
   const [videoId, setVideoId] = useState('dQw4w9WgXcQ')
@@ -23,9 +26,11 @@ const Video = () => {
   socket.once('new-user-info', arg => {
     let data = JSON.parse(arg)
 
+    setMute(data.mute)
     setSearchbar(data.searchbar)
     setStart(data.start + 1)
     setVideoId(data.videoId)
+    setVideoIdError(data.videoIdError)
   })
   
 
@@ -79,23 +84,31 @@ const Video = () => {
     }
 
     const storeEvent = e => {
-      setVideoPlayer(e.target)
       e.target.seekTo(start)
-      socket.off()
+      mute ? e.target.mute() : e.target.unMute()
+      setVideoPlayer(e.target)
 
+      socket.off()
       socket.on('new-video-control', arg => {
         let data = JSON.parse(arg)
 
         if(data.newUser !== undefined) {
           socket.emit('user-info', JSON.stringify({
+            mute: e.target.isMuted(),
             searchbar: searchbar,
             start: e.target.getCurrentTime() || 0,
-            videoId: videoId
+            videoId: videoId,
+            videoIdError: videoIdError
           }))
         }
 
         if (data.time !== undefined) {
           e.target.seekTo(data.time)
+        }
+
+        if (data.mute !== undefined) {
+          data.mute ? e.target.mute() : e.target.unMute()
+          setMute(data.mute)
         }
     
         if (data.searchbar !== undefined) {
@@ -130,13 +143,18 @@ const Video = () => {
       socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() - 5 }))
     }
 
+    const handleMute = () => {
+      socket.emit('video-control', JSON.stringify({ mute: !mute }))
+    }
+
     const handleFastForward = () => {
       socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() + 5 }))
     }
 
     return (
-      <div>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
         <Button onClick={handleFastRewind} style={{height: 50}}><FastRewindIcon/></Button>
+        <Button onClick={handleMute} style={{height: 50}}>{mute ? <VolumeOffIcon/> : <VolumeUpIcon/>}</Button>
         <Button onClick={handleFastForward} style={{height: 50}}><FastForwardIcon/></Button>
       </div>
     )
