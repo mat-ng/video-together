@@ -13,19 +13,12 @@ const app = express()
 
 const io = socketIO(app)
 	.on('connection', socket => {
-		// When new connection, tell frontend to getCurrentTime(), 
-		// then send back to backend, then send to frontend and make sure 
-		// everyone is at the same time
-
-		console.log('Client connected')
-
+		
 		socket.on('video-control', data => {
 			io.emit('new-video-control', data)
-			console.log(data)
-
 		})
 
-		socket.on('disconnect', () => {
-			console.log('Client disconnected')
+		socket.on('user-info', data => {
+			io.emit('new-user-info', data)
 		})
 	})

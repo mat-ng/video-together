@@ -5,7 +5,6 @@ import Video from './components/Video.jsx'
 
 
 const App = () => {
-
     return (
         <div>
             <div style={{display: 'flex', justifyContent: 'center', paddingBottom: 30}}>

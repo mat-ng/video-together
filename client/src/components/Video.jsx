@@ -1,35 +1,39 @@
 import React, { useState } from 'react'
 
 import io from 'socket.io-client'
-
 import getYouTubeId from 'get-youtube-id'
-import YouTube from 'react-youtube'
 
 import Button from '@mui/material/Button'
 import FastForwardIcon from '@mui/icons-material/FastForward'
 import FastRewindIcon from '@mui/icons-material/FastRewind'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
-import VolumeOffIcon from '@mui/icons-material/VolumeOff'
-import VolumeUpIcon from '@mui/icons-material/VolumeUp'
+import YouTube from 'react-youtube'
 
 
 const socket = io()
 
 const Video = () => {
   const [joined, setJoined] = useState(false)
-  const [mute, setMute] = useState(false)
   const [searchbar, setSearchbar] = useState('')
-  const [speed, setSpeed] = useState(1)
+  const [start, setStart] = useState(0)
   const [videoId, setVideoId] = useState('dQw4w9WgXcQ')
   const [videoIdError, setVideoIdError] = useState(false)
   const [videoPlayer, setVideoPlayer] = useState({})
 
+  socket.once('new-user-info', arg => {
+    let data = JSON.parse(arg)
+
+    setSearchbar(data.searchbar)
+    setStart(data.start + 1)
+    setVideoId(data.videoId),
+    setVideoIdError(data.videoIdError)
+  })
   
+
   const renderJoinButton = () => {
     const handleJoin = () => {
       setJoined(true)
+      socket.emit('video-control', JSON.stringify({ newUser: true }))
     }
     
     return (
@@ -40,15 +44,11 @@ const Video = () => {
 
   const renderSearchbar = () => {
     const handleInput = e => {
-      // setSearchbar(e.target.value) //SCRAP IN PRODUCTION
-      
       socket.emit('video-control', JSON.stringify({ searchbar: e.target.value }))
     }
 
     const handleSubmit = () => {
       if(getYouTubeId(searchbar)) {
-        // setVideoId(getYouTubeId(searchbar)) //SCRAP IN PRODUCTION
-      
         socket.emit('video-control', JSON.stringify({ videoId: getYouTubeId(searchbar), videoIdError: false }))
       }
       else {
@@ -81,13 +81,20 @@ const Video = () => {
 
     const storeEvent = e => {
       setVideoPlayer(e.target)
+      e.target.seekTo(start)
 
+      socket.off()
+      
       socket.on('new-video-control', arg => {
         let data = JSON.parse(arg)
 
-        if (data.mute !== undefined) {
-          data.mute ? e.target.mute() : e.target.unMute()
-          setMute(data.mute)
+        if(data.newUser !== undefined) {
+          socket.emit('user-info', JSON.stringify({
+            searchbar: searchbar,
+            start: e.target.getCurrentTime() || 0,
+            videoId: videoId,
+            videoIdError: videoIdError
+          }))
         }
 
         if (data.time !== undefined) {
@@ -97,15 +104,10 @@ const Video = () => {
         if (data.searchbar !== undefined) {
           setSearchbar(data.searchbar)
         }
-
-        if (data.speed !== undefined) {
-          e.target.setPlaybackRate(data.speed)
-          setSpeed(data.speed)
-        }
     
-        if (data.videoId !== undefined) {
+        if (data.videoId !== undefined && data.videoId !== videoId) {
           setVideoId(data.videoId)
-          socket.off()
+          setStart(0)
         }
 
         if (data.videoIdError !== undefined) {
@@ -127,46 +129,18 @@ const Video = () => {
 
 
   const renderVideoControls = () => {
-    const speedOptions = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
-
-    const createMenuItem = (value) => {
-      return <MenuItem value={value}>{value}x</MenuItem>
+    const handleFastRewind = () => {
+      socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() - 5 }))
     }
 
     const handleFastForward = () => {
-      // videoPlayer.seekTo(videoPlayer.getCurrentTime() + 5) //SCRAP IN PRODUCTION
-      
       socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() + 5 }))
-    }
-  
-    const handleMute = () => {
-      // mute ? videoPlayer.unMute() : videoPlayer.mute() //SCRAP IN PRODUCTION
-      // setMute(!mute) //SCRAP IN PRODUCTION
-
-      socket.emit('video-control', JSON.stringify({ mute: !mute }))
-    }
-
-    const handleFastRewind = () => {
-      // videoPlayer.seekTo(videoPlayer.getCurrentTime() - 5) //SCRAP IN PRODUCTION
-      
-      socket.emit('video-control', JSON.stringify({ time: videoPlayer.getCurrentTime() - 5 }))
-    }
-  
-    const handleSpeedChange = e => {
-      // videoPlayer.setPlaybackRate(e.target.value) //SCRAP IN PRODUCTION
-      // setSpeed(e.target.value) //SCRAP IN PRODUCTION
-
-      socket.emit('video-control', JSON.stringify({ speed: e.target.value }))
     }
 
     return (
       <div>
         <Button onClick={handleFastRewind} style={{height: 50}}><FastRewindIcon/></Button>
         <Button onClick={handleFastForward} style={{height: 50}}><FastForwardIcon/></Button>
-        <Button onClick={handleMute} style={{height: 50}}>{mute ? <VolumeOffIcon/> : <VolumeUpIcon/>}</Button>
-        <Select value={speed} onChange={handleSpeedChange} style={{float: 'right', height: 50}}>
-          { speedOptions.map (speedOption => createMenuItem(speedOption)) }
-        </Select>
       </div>
     )
   }
