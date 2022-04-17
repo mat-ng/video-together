@@ -27,7 +27,7 @@ My second idea was to use YouTube's video API, so users have the ability to sele
 
 ## Challenges
 
-This project, however, was not without its challenges. One issue I encountered was that YouTube's video API was limited in its capacities. More specifically, the API's embedded player component would not independently recognize when users perform certain operations to the video (mute, unmute, etc.). For example, this means if one user mutes the video through the API's component, such information cannot be relayed to the other users. As such, I had to work around this limitation. Firstly, I prohibited users from interacting with the API's embedded player component. Then, I coded separate controls for the video player, so all video activity would be controlled and synchronized with all users.
+This project, however, was not without its challenges. One issue I encountered was that YouTube's video API was limited in its capacities. More specifically, the API's embedded player component would not independently recognize when users perform certain operations to the video (mute, unmute, etc.). For example, this means if one user mutes the video through the API's component, this information cannot be relayed to the other users. As such, I had to work around this limitation. Firstly, I prohibited users from interacting with the API's embedded player component. Then, I coded separate controls for the video player, so all video activity would be controlled and synchronized with all users.
 
 <p align="center">
   <img src="client/src/assets/Controls.PNG" width="600" />
