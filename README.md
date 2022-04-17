@@ -44,7 +44,7 @@ Another issue I encountered with YouTube's API was that it prohibits videos (wit
 Video Together can be accessed [here](https://video-together.herokuapp.com/)
 
 <p align="center">
-  <img src="client/src/assets/FinalResult.jpg" width="600" />
+  <img src="client/src/assets/FinalResult.jpg" width="800" />
 </p>
 
 ## Future Roadmap
