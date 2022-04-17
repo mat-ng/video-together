@@ -16,6 +16,7 @@ This lead to my idea for Video Together. Although it was difficult to gather wit
 After getting inspired, I developed 2 main goals for this project:
 
 1. Video Together should allow for a low-latency means of communicating data across devices, so users see little to no delay when a user plays a video or adjusts playback settings.
+
 2. Video Together should offer a diverse selection of videos and/or shows, so users can enjoy a wide range of entertainment.
 
 ## Development
