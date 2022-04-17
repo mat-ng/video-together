@@ -29,17 +29,23 @@ My second idea was to use YouTube's video API, so users have the ability to sele
 
 This project, however, was not without its challenges. One issue I encountered was that YouTube's video API was limited in its capacities. More specifically, the API's embedded player component would not independently recognize when users perform certain operations to the video (mute, unmute, etc.). For example, this means if one user mutes the video through the API's component, such information cannot be relayed to the other users. As such, I had to work around this limitation. Firstly, I prohibited users from interacting with the API's embedded player component. Then, I coded separate controls for the video player, so all video activity would be controlled and synchronized with all users.
 
-<img src="client/src/assets/Controls.PNG" width="800" />
+<div width="100%" text-align="center">
+  <img src="client/src/assets/Controls.PNG" width="600" />
+</div>
 
 Another issue I encountered with YouTube's API was that it prohibits videos (with sound) from auto-playing when users first load a website. Presumably, this was to protect users from pesky auto-playing ads on other websites. However, for this project, it presented a problem. Imagine two users are already watching a video together, but a third user wants to join; this third user would be prohibited under the YouTube API's auto-playing rules, because they would need to load a website that would be displaying an auto-playing video with sound. As such, I worked around this issue. I added an additional page that users would view when first loading the website. This page would include a button that allows users to join their friends watching a video, but would not play the video on their device until that button is clicked. As a result, this allowed users to join the video app at any time, without the need to display an auto-playing video when they first join.
 
-<img src="client/src/assets/AdditionalPage.PNG" width="800" />
+<div width="100%" text-align="center">
+  <img src="client/src/assets/AdditionalPage.PNG" width="600" />
+</div>
 
 ## Final Result
 
 Video Together can be accessed [here](https://video-together.herokuapp.com/)
 
-<img src="client/src/assets/FinalResult.jpg" width="800" />
+<div width="100%" text-align="center">
+  <img src="client/src/assets/FinalResult.jpg" width="600" />
+</div>
 
 ## Future Roadmap
 
