@@ -53,7 +53,7 @@ Video Together can be accessed [here](https://video-together.herokuapp.com/).
 
 There are many ways that Video Together can continue to be improved:
 
-1. In its current state, if a group of users all exit Video Together (but with the intention of returning later), the application will revert to playing the default video. To improve this, I could look into caching so that Video Together would remember which video was last playing and resume playing it.
+1. In its current state, if a group of users all exit Video Together (but with the intention of returning later), the application will revert to playing the default video. To improve this, I could look into HTTP caching so that Video Together would remember which video was last playing and resume playing it.
 
 2. Unfortunately, Video Together is currently susceptible to bots or other forms of automated attacks. As such, I could implement a human verification test before users can join Video Together, so bots would be filtered and handled accordingly.
 
