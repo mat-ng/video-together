@@ -16,7 +16,7 @@ const IsMobileBrowser = () => {
         }
     }, []);
 
-    return (width <= 768)
+    return (height > width ? width <= 600 : height <= 600)
 }
 
 export default IsMobileBrowser
