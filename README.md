@@ -33,8 +33,6 @@ This project, however, was not without its challenges. One issue I encountered w
   <img src="client/src/assets/Controls.PNG" width="600" />
 </p>
 
-<br />
-
 Another issue I encountered with YouTube's API was that it prohibits videos (with sound) from auto-playing when users first load a website. Presumably, this was to protect users from pesky auto-playing ads on other websites. However, for this project, it presented a problem. Imagine two users are already watching a video together, but a third user wants to join; this third user would be prohibited under the YouTube API's auto-playing rules, because they would need to load a website that would be displaying an auto-playing video with sound. As such, I worked around this issue. I added an additional page that users would view when first loading the website. This page would include a button that allows users to join their friends watching a video, but would not play the video on their device until that button is clicked. As a result, this allowed users to join the video app at any time, without the need to display an auto-playing video when they first join.
 
 ## Final Result
