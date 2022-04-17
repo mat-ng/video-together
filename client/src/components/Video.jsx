@@ -170,9 +170,9 @@ const Video = () => {
             {renderVideoControls()}
           </div>
         :
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 70 }}>
-           {renderJoinButton()}
-        </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 70 }}>
+            {renderJoinButton()}
+          </div>
       }
     </div>
   )
