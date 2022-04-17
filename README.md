@@ -1,9 +1,9 @@
 # Video Together
 ![Project Banner](client/src/assets/Poster.jpg)
 
-Video Together is a full-stack web application that syncs YouTube videos across devices. Users can watch videos together and perform synchronized controls (e.g. fast forward, mute, etc.).
+Video Together is a full-stack web application that syncs YouTube videos across devices. Users on different systems can watch videos together and perform synchronized controls (fast forward, mute, etc.).
 
-The site uses [YouTube's Video API](https://developers.google.com/youtube) and websockets to create an interactive and real-time web experience for its users.
+The site uses [YouTube's video API](https://developers.google.com/youtube) and websockets to create an interactive and real-time web experience for its users.
 
 ## Inspiration
 
@@ -18,6 +18,35 @@ After getting inspired, I developed 2 main goals for this project:
 1. Video Together should allow for a low-latency means of communicating data across devices, so users see little to no delay when a user plays a video or adjusts playback settings.
 2. Video Together should offer a diverse selection of videos and/or shows, so users can enjoy a wide range of entertainment.
 
-## Design
+## Development
 
-My first design choice was to use websockets with [Socket.IO](https://socket.io). Websockets would allow for real-time communication between users and the app. For example, if any user decides to fast forward/rewind a video, this information would be relayed instantly to all other users on the platform. As such, this would allow for little to no delay for users when the video is played/adjusted, thus addressing goal 1.
+My first idea during development was to use websockets with [Socket.IO](https://socket.io). Websockets would allow for real-time communication between users and the app. For example, if any user decides to fast forward/rewind a video, this information would be relayed instantly to all other users on the platform. As such, this would allow for little to no delay for users when the video is played/adjusted.
+
+My second idea was to use YouTube's video API, so users have the ability to select from the limitless amount of content available on YouTube's platform. These days, it's no secret that YouTube consumes much of our free time. As such, Video Together would offer users the opportunity to share our favourite videos with others, in real-time.
+
+## Challenges
+
+This project, however, was not without its challenges. One issue I encountered was that YouTube's video API was limited in its capacities. More specifically, the API's embedded player component would not independently recognize when users perform certain operations to the video (mute, unmute, etc.). For example, this means if one user mutes the video through the API's component, such information cannot be relayed to the other users. As such, I had to work around this limitation. Firstly, I prohibited users from interacting with the API's embedded player component. Then, I coded separate controls for the video player, so all video activity would be controlled and synchronized with all users.
+
+![Separate controls for the video player](client/src/assets/Controls.PNG)
+
+Another issue I encountered with YouTube's API was that it prohibits videos (with sound) from auto-playing when users first load a website. Presumably, this was to protect users from pesky auto-playing ads on other websites. However, for this project, it presented a problem. Imagine two users are already watching a video together, but a third user wants to join; this third user would be prohibited under the YouTube API's auto-playing rules, because they would need to load a website that would be displaying an auto-playing video with sound. As such, I worked around this issue. I added an additional page that users would view when first loading the website. This page would include a button that allows users to join their friends watching a video, but would not play the video on their device until that button is clicked. As a result, this allowed users to join the video app at any time, without the need to display an auto-playing video.
+
+![Additional first page](client/src/assets/AdditionalPage.PNG)
+
+## Final Result
+
+Video Together can be accessed [here](https://video-together.herokuapp.com/)
+
+![Final Result](client/src/assets/FinalResult.PNG)
+
+## Future Roadmap
+
+There are many ways that Video Together can continue to be improved:
+
+1. In its current state, if a group of users all exit Video Together (but with the intention of returning later), the application will revert to playing the default video. To improve this, I could look into caching so that Video Together would remember which video was last playing and resume playing it.
+2. Unfortunately, Video Together is currently susceptible to bots or other forms of automated attacks. As such, I could implement a human verification test before users can join Video Together, so bots would be filtered and prohibited accordingly.
+
+## License
+
+[Apache License 2.0](https://github.com/mat-ng/video-together/blob/main/LICENSE)
