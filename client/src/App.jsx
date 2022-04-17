@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Banner from './assets/Banner.png'
-import IsMobileBrowser from './components/IsMobileBrowser.jsx'
+import IsMobileBrowser from './hooks/IsMobileBrowser.jsx'
 import Video from './components/Video.jsx'
 
 

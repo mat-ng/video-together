@@ -5,8 +5,8 @@ const IsMobileBrowser = () => {
     const [height, setHeight] = useState(window.innerHeight)
 
     const handleWindowSizeChange = () => {
-            setWidth(window.innerWidth)
-            setHeight(window.innerHeight)
+        setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
     }
 
     useEffect(() => {
@@ -14,9 +14,9 @@ const IsMobileBrowser = () => {
         return () => {
             window.removeEventListener('resize', handleWindowSizeChange)
         }
-    }, []);
+    }, [])
 
-    return (height > width ? width <= 600 : height <= 600)
+    return (width <= 600 || height <= 600)
 }
 
 export default IsMobileBrowser
