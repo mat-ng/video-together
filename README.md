@@ -1,7 +1,7 @@
 # Video Together
 ![Project Banner](client/src/assets/Poster.jpg)
 
-Video Together is a full-stack web application that syncs YouTube videos across devices. Users on different systems can watch videos together and perform synchronized controls (fast forward, mute, etc.).
+Video Together is a full-stack web application that syncs YouTube videos across devices. Users on different computers can watch videos together and perform synchronized controls (fast forward, mute, etc.).
 
 The site uses [YouTube's video API](https://developers.google.com/youtube) and websockets to create an interactive and real-time web experience for its users.
 
