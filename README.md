@@ -20,4 +20,4 @@ After getting inspired, I developed 2 main goals for this project:
 
 ## Design
 
-My first design choice was to use websockets with [Socket.IO](https://socket.io). Websockets would allow for real-time communication between users and the app. For example, if any user decides to fast forward/rewind a playing video, this information would be relayed instantly to all other users on the platform. As such, this would allow for little to no delay for users when the video is played/adjusted, thus addressing goal #1.
+My first design choice was to use websockets with [Socket.IO](https://socket.io). Websockets would allow for real-time communication between users and the app. For example, if any user decides to fast forward/rewind a playing video, this information would be relayed instantly to all other users on the platform. As such, this would allow for little to no delay for users when the video is played/adjusted, thus addressing goal 1.
