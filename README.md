@@ -27,7 +27,7 @@ My second idea was to use YouTube's video API, so users have the ability to sele
 
 With these ideas in mind, I started developing Video Together. I started by coding the backend in Express, ensuring that the server is listening for data from the client. Then, I enabled the server to echo any data received from one client to all other clients. As a result, when one user tries to play a new video or perform an operation, this information would instantly be relayed to all other users.
 
-Then, I started coding the frontend in React. I ensured that the client is listening for data pushed from the server, so that the frontend is updated accordingly when the server echoes video data to clients. Finally, I established the code that would allow the client to push data to the server when users play a new video or perform video operations.
+Then, I started coding the frontend in React. I ensured that the client is listening for data pushed from the server, so that the frontend is updated accordingly when the server echoes video data to clients. Finally, I established the code that would allow the client to push data to the server when users interact with videos.
 
 ## Challenges
 
