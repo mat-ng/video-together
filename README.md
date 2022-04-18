@@ -25,6 +25,10 @@ My first idea during development was to use websockets with [Socket.IO](https://
 
 My second idea was to use YouTube's video API, so users have the ability to select from the limitless amount of content available on YouTube's platform. These days, it's no secret that YouTube consumes much of our free time. As such, Video Together would offer users the opportunity to share our favourite videos with others, in real-time.
 
+With these ideas in mind, I started developing Video Together. I started by coding the backend in Express, ensuring that the server is listening for data from the client. Then, I enabled the server to echo any data received from one client to all other clients. As a result, when one user tries to play a new video or perform an operation, this information would instantly be relayed to all other users.
+
+Then, I started coding the frontend in React. I ensured that the client is listening for data pushed from the server, so that the frontend is correctly updated when the server echoes video information to all clients. Then, I established the code that would allow the client to push data to the server when a user interacts with the video or plays a new one.
+
 ## Challenges
 
 This project, however, was not without its challenges. One issue I encountered was that YouTube's video API was limited in its capacities. More specifically, the API's embedded player component would not independently recognize when users perform certain operations to the video (mute, unmute, etc.). For example, this means if one user mutes the video through the API's component, this information cannot be relayed to the other users. As such, I had to work around this limitation. Firstly, I prohibited users from interacting with the API's embedded player component. Then, I coded separate controls for the video player, so all video activity would be controlled and synchronized with all users.
