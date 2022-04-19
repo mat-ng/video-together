@@ -1,6 +1,8 @@
 # Video Together
 ![Project Banner](client/src/assets/Poster.jpg)
 
+The app can be accessed [here](https://video-together.herokuapp.com).
+
 Video Together is a full-stack web application that syncs YouTube videos across devices. Users on different computers can watch videos together and perform synchronized controls (fast forward, mute, etc.).
 
 The site uses [YouTube's video API](https://developers.google.com/youtube) and websockets to create an interactive and real-time web experience for its users.
@@ -45,7 +47,7 @@ Another issue I encountered with YouTube's API was that it prohibits videos (wit
 
 ## Final Result
 
-Video Together can be accessed [here](https://video-together.herokuapp.com/).
+Video Together can be accessed [here](https://video-together.herokuapp.com).
 
 <p align="center">
   <img src="client/src/assets/FinalResult.jpg" width="800" />
