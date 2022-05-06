@@ -63,4 +63,4 @@ There are many ways that Video Together can continue to be improved:
 
 ## License
 
-[Apache License 2.0](https://github.com/mat-ng/video-together/blob/main/LICENSE)
+[Apache License 2.0](https://github.com/mat-ng/video-together/blob/master/LICENSE)
