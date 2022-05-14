@@ -62,7 +62,7 @@ const Video = () => {
 
     return (
       <div>
-        <h1 style={{fontFamily: 'Trebuchet MS', fontSize: 22}}>Paste your YouTube URL below and enjoy your watch party!</h1>
+        <h1 style={{fontFamily: 'Trebuchet MS', fontSize: 17.5}}>Paste your YouTube URL below and sync your video with everyone watching!</h1>
         <TextField onChange={handleInput} placeholder='Paste YouTube Link' variant='outlined' value={searchbar} error={videoIdError} helperText={videoIdError ? 'Please enter a valid YouTube URL' : ''} style={{width: 550}}/>
         <Button onClick={handleSubmit} variant='outlined' style={{float: 'right', height: 56}}>Enter</Button>
       </div>
