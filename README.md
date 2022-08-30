@@ -11,7 +11,7 @@ The site uses websockets to create a real-time web experience for its users, as 
 
 Throughout this past pandemic, we've been deprived of many opportunities to attend movie theatres/performances with our friends and family. As someone whose main idea of a fun night consisted of going out and watching movies, I certainly felt isolated and dispirited  during this time.
 
-This lead to my idea for Video Together. Although it was difficult to gather with friends in-person, I decided that a valid alternative would be an online platform where we could watch videos together (from the comfort of our own homes, of course)
+This lead to my idea for Video Together. Although it was difficult to gather with friends in-person, I decided that a valid alternative would be an online platform where we could watch videos together (from the comfort of our own homes, of course).
 
 ## Goals
 
