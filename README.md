@@ -1,5 +1,5 @@
 # Video Together
-![Project Banner](client/src/assets/Banner1.jpg)
+![Project Banner](client/src/assets/Banner.jpg)
 
 The app can be accessed [here](https://video-together.herokuapp.com).
 
