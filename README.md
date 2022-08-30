@@ -23,7 +23,7 @@ After getting inspired, I developed 2 main goals for this project:
 
 ## Development
 
-My first idea during development is to use websockets with [Socket.IO](https://socket.io). Websockets would allow for real-time communication between users and the app. For example, if any user decides to fast forward/rewind a video, this information would be relayed instantly to all other users on the platform. As such, this would allow for little to no delay for users when the video is played or controlled.
+My first idea during development was to use websockets with [Socket.IO](https://socket.io). Websockets would allow for real-time communication between users and the app. For example, if any user decides to fast forward/rewind a video, this information would be relayed instantly to all other users on the platform. As such, this would allow for little to no delay for users when the video is played or controlled.
 
 My second idea was to use YouTube's video API, so users have the ability to select from the limitless amount of content available on YouTube's platform. These days, it's no secret that YouTube consumes much of our free time. As such, Video Together would offer users the opportunity to share our favorite videos with others, in real-time.
 
